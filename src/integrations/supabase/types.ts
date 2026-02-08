@@ -16,40 +16,46 @@ export type Database = {
     Tables: {
       articles: {
         Row: {
-          content: string
+          content: string | null
           created_at: string
+          description: string | null
           excerpt: string | null
           featured_image_url: string | null
           id: string
-          published: boolean
-          slug: string
-          title: string
-          topic: Database["public"]["Enums"]["article_topics"]
-          updated_at: string
+          published: boolean | null
+          slug: string | null
+          theme: string | null
+          title: string | null
+          topic: Database["public"]["Enums"]["article_topics"] | null
+          updated_at: string | null
         }
         Insert: {
-          content: string
+          content?: string | null
           created_at?: string
+          description?: string | null
           excerpt?: string | null
           featured_image_url?: string | null
           id?: string
-          published?: boolean
-          slug: string
-          title: string
-          topic: Database["public"]["Enums"]["article_topics"]
-          updated_at?: string
+          published?: boolean | null
+          slug?: string | null
+          theme?: string | null
+          title?: string | null
+          topic?: Database["public"]["Enums"]["article_topics"] | null
+          updated_at?: string | null
         }
         Update: {
-          content?: string
+          content?: string | null
           created_at?: string
+          description?: string | null
           excerpt?: string | null
           featured_image_url?: string | null
           id?: string
-          published?: boolean
-          slug?: string
-          title?: string
-          topic?: Database["public"]["Enums"]["article_topics"]
-          updated_at?: string
+          published?: boolean | null
+          slug?: string | null
+          theme?: string | null
+          title?: string | null
+          topic?: Database["public"]["Enums"]["article_topics"] | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -59,8 +65,6 @@ export type Database = {
           created_at: string
           date_of_birth: string | null
           email: string | null
-          first_name: string | null
-          id: string
           last_name: string | null
           receive_community_events_emails: boolean | null
           receive_newsletter: boolean | null
@@ -73,8 +77,6 @@ export type Database = {
           created_at?: string
           date_of_birth?: string | null
           email?: string | null
-          first_name?: string | null
-          id?: string
           last_name?: string | null
           receive_community_events_emails?: boolean | null
           receive_newsletter?: boolean | null
@@ -87,8 +89,6 @@ export type Database = {
           created_at?: string
           date_of_birth?: string | null
           email?: string | null
-          first_name?: string | null
-          id?: string
           last_name?: string | null
           receive_community_events_emails?: boolean | null
           receive_newsletter?: boolean | null
@@ -101,34 +101,23 @@ export type Database = {
       user_roles: {
         Row: {
           created_at: string
-          id: string
           role: Database["public"]["Enums"]["app_role"]
           updated_at: string
           user_id: string
         }
         Insert: {
           created_at?: string
-          id?: string
           role?: Database["public"]["Enums"]["app_role"]
           updated_at?: string
           user_id: string
         }
         Update: {
           created_at?: string
-          id?: string
           role?: Database["public"]["Enums"]["app_role"]
           updated_at?: string
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "user_roles_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["user_id"]
-          },
-        ]
+        Relationships: []
       }
     }
     Views: {
@@ -151,7 +140,7 @@ export type Database = {
         }[]
       }
       get_user_role: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: Database["public"]["Enums"]["app_role"]
       }
       has_role: {
@@ -161,10 +150,7 @@ export type Database = {
         }
         Returns: boolean
       }
-      is_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
       app_role: "admin" | "member"
