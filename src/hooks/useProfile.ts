@@ -152,14 +152,12 @@ export function useProfile(userId?: string) {
   const getDisplayName = useCallback((): string => {
     if (!profileState.profile) return "User";
     
-    const { first_name, last_name } = profileState.profile;
+    const { last_name, email } = profileState.profile;
     
-    if (first_name && last_name) {
-      return `${first_name} ${last_name}`;
-    } else if (first_name) {
-      return first_name;
-    } else if (last_name) {
+    if (last_name) {
       return last_name;
+    } else if (email) {
+      return email;
     }
     
     return "User";
@@ -169,14 +167,12 @@ export function useProfile(userId?: string) {
   const getInitials = useCallback((): string => {
     if (!profileState.profile) return "U";
     
-    const { first_name, last_name } = profileState.profile;
+    const { last_name, email } = profileState.profile;
     
-    if (first_name && last_name) {
-      return `${first_name.charAt(0)}${last_name.charAt(0)}`.toUpperCase();
-    } else if (first_name) {
-      return first_name.charAt(0).toUpperCase();
-    } else if (last_name) {
+    if (last_name) {
       return last_name.charAt(0).toUpperCase();
+    } else if (email) {
+      return email.charAt(0).toUpperCase();
     }
     
     return "U";
