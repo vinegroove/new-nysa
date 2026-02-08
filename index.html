@@ -1,39 +1,157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nysa - Commandaria Vineyard Restoration Community</title>
-    <meta name="description" content="Join us in restoring traditional Commandaria grapevines and natural stone walls. Community-driven restoration in the mythical land of Nysa.">
-    <meta name="author" content="Nysa Vineyard Restoration Project" />
-    <meta name="keywords" content="vineyard restoration, Commandaria wine, Greek mythology, Nysa, Dionysus, agricultural heritage, community project, volunteer, Cyprus wine">
-
-    <meta property="og:title" content="Nysa - Restoring Ancient Vineyard Heritage" />
-    <meta property="og:description" content="Join us in restoring traditional Commandaria grapevines and ancient stone walls. Community-driven vineyard restoration in the mythical land of Nysa." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    <link rel="icon" type="image/x-icon" href="https://storage.googleapis.com/gpt-engineer-file-uploads/ljMDJD0fULTE74kyZdZTNcG9IfB3/uploads/1758153237116-grape (1).png">
-    <!-- GitHub Pages SPA redirect handler -->
-    <script type="text/javascript">
-      (function(l) {
-        if (l.search[1] === '/') {
-          var decoded = l.search.slice(1).split('&').map(function(s) {
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
-    </script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nysa - Commandaria Vineyard Restoration Community</title>
+  <meta name="description" content="Join us in restoring traditional Commandaria grapevines and natural stone walls. Community-driven restoration in the mythical land of Nysa.">
+  <meta name="author" content="Nysa Vineyard Restoration Project">
+  <meta name="keywords" content="vineyard restoration, Commandaria wine, Greek mythology, Nysa, Dionysus, agricultural heritage, community project, volunteer, Cyprus wine">
+  
+  <meta property="og:title" content="Nysa - Restoring Ancient Vineyard Heritage">
+  <meta property="og:description" content="Join us in restoring traditional Commandaria grapevines and ancient stone walls.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nysa.earth/">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@nysa_earth">
+  
+  <link rel="icon" type="image/x-icon" href="https://storage.googleapis.com/gpt-engineer-file-uploads/ljMDJD0fULTE74kyZdZTNcG9IfB3/uploads/1758153237116-grape%20(1).png">
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <!-- GitHub Pages SPA redirect handler -->
+  <script type="text/javascript">
+    (function(l) {
+      if (l.search[1] === '/') {
+        var decoded = l.search.slice(1).split('&').map(function(s) {
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        window.history.replaceState(null, null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    }(window.location))
+  </script>
 </head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <span>🍇</span>
+        <span>Nysa</span>
+      </a>
+      
+      <ul class="nav-links">
+        <li><a href="/our-story.html">Our Story</a></li>
+        <li><a href="/projects.html">Projects</a></li>
+        <li><a href="/learn-more.html">Learn More</a></li>
+      </ul>
+      
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+    </div>
+    
+    <div class="mobile-menu">
+      <a href="/">Home</a>
+      <a href="/our-story.html">Our Story</a>
+      <a href="/projects.html">Projects</a>
+      <a href="/learn-more.html">Learn More</a>
+    </div>
+  </nav>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Sustainable Restoration<br><span style="color: var(--accent);">Rooted in Earth</span></h1>
+          <p>Experience traditional Commandaria viticulture and be part of a close-to-nature community dedicated to restoration and sustainability.</p>
+          
+          <div class="hero-cta">
+            <a href="/learn-more.html" class="btn btn-primary btn-lg">
+              Learn More
+              <span>→</span>
+            </a>
+            <a href="https://opencollective.com/nysa-earth" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">
+              Support Us
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+        
+        <div class="hero-image">
+          <img src="/images/articles/commandaria-vineyard.jpg" alt="Commandaria vineyard restoration" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Values Section -->
+    <section class="light-bg">
+      <h2>Our Mission</h2>
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-header">
+            <h3>🍷 Viticulture</h3>
+          </div>
+          <p>Preserving traditional Commandaria grape varieties and ancient winemaking techniques that have sustained communities for millennia.</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h3>🌿 Restoration</h3>
+          </div>
+          <p>Rebuilding natural stone terraces and healing the landscape through sustainable agricultural practices and community engagement.</p>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h3>👥 Community</h3>
+          </div>
+          <p>Bringing together volunteers, local experts, and environmental stewards to create meaningful change through collective action.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How to Help Section -->
+    <section>
+      <h2>How to Help</h2>
+      <div class="hero-content" style="margin-bottom: 3rem;">
+        <div>
+          <p>Whether you want to contribute financially, volunteer hands-on work, or simply learn more about our projects, there are many ways to support the restoration of Commandaria's ancient vineyards.</p>
+          <p>Join a global community committed to preserving agricultural heritage and environmental sustainability in the Mediterranean.</p>
+        </div>
+        <div>
+          <div class="hero-cta" style="max-width: 100%;">
+            <a href="/learn-more.html" class="btn btn-secondary btn-lg">
+              Learn More
+              <span>→</span>
+            </a>
+            <a href="https://opencollective.com/nysa-earth" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg">
+              Support Our Work
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <span>🍇</span>
+        <span>Nysa</span>
+      </div>
+      <p class="footer-description">Maintaining ancient vineyard heritage, one vine at a time.</p>
+      <ul class="footer-links">
+        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="/terms-of-use.html">Terms of Use</a></li>
+        <li><a href="https://opencollective.com/nysa-earth" target="_blank">Open Collective</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
 </html>
