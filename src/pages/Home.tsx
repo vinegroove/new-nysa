@@ -4,12 +4,9 @@ import { ArrowRight, Grape, Users, TreePine, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { useAuth } from "@/hooks/useAuth";
 import heroImage from "@/assets/hero-vineyard.jpg";
 
 const Home = () => {
-  const { user } = useAuth();
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -30,26 +27,17 @@ const Home = () => {
                   </span>
                 </h1>
                 <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
-                  Experience traditional Commandaria viticulture, contribute to our projects, and be part of a close-to-nature community.
+                  Experience traditional Commandaria viticulture and be part of a close-to-nature community dedicated to restoration and sustainability.
                 </p>
               </div>
               
               <div className="flex flex-col sm:flex-row gap-6 pt-4">
-                {user ? (
-                  <Link to="/dashboard" className="w-full sm:w-auto">
-                    <Button size="lg" className="text-lg px-8 py-6 font-medium w-full">
-                      Go to Community
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                ) : (
-                  <Link to="/auth?tab=signup" className="w-full sm:w-auto">
-                    <Button size="lg" className="text-lg px-8 py-6 font-medium w-full">
-                      Join Our Community
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                )}
+                <Link to="/learn-more" className="w-full sm:w-auto">
+                  <Button size="lg" className="text-lg px-8 py-6 font-medium w-full">
+                    Learn More
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
                 <Button size="lg" variant="secondary" className="text-lg px-8 py-6 font-medium" asChild>
                   <a 
                     href="https://opencollective.com/nysa-earth" 
@@ -57,7 +45,7 @@ const Home = () => {
                     rel="noopener noreferrer"
                     className="flex items-center"
                   >
-                    Contribute to our projects
+                    Support Our Mission
                     <ExternalLink className="ml-2 h-5 w-5" />
                   </a>
                 </Button>
@@ -146,21 +134,12 @@ const Home = () => {
             every contribution directly helps restore and maintain sustainable Commandaria agriculture.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {user ? (
-              <Link to="/dashboard" className="w-full sm:w-auto">
-                <Button size="lg" variant="secondary" className="text-lg px-8 py-6 w-full">
-                  Go to Community
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-            ) : (
-              <Link to="/auth?tab=signup" className="w-full sm:w-auto">
-                <Button size="lg" variant="secondary" className="text-lg px-8 py-6 w-full">
-                  Join our Community
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-            )}
+            <Link to="/learn-more" className="w-full sm:w-auto">
+              <Button size="lg" variant="secondary" className="text-lg px-8 py-6 w-full">
+                Learn More
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
             <Button size="lg" variant="primary-outline" className="text-lg px-8 py-6" asChild>
               <a 
                 href="https://opencollective.com/nysa-earth" 
@@ -168,7 +147,7 @@ const Home = () => {
                 rel="noopener noreferrer"
                 className="flex items-center"
               >
-                Contribute on Open Collective
+                Support Our Work
                 <ExternalLink className="ml-2 h-5 w-5" />
               </a>
             </Button>

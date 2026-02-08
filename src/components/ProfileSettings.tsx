@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
+import { useProfile } from "@/hooks/useProfile";
 import { useToast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
 
@@ -13,91 +13,56 @@ interface ProfileSettingsProps {
   user: User;
 }
 
-interface Profile {
-  first_name?: string;
-  last_name?: string;
-  date_of_birth?: string;
-  bio?: string;
-  created_at?: string;
-}
-
 const ProfileSettings = ({ user }: ProfileSettingsProps) => {
-  const [profile, setProfile] = useState<Profile>({});
-  const [loading, setLoading] = useState(false);
+  const { profile, isLoading, updateProfile } = useProfile(user.id);
+  const [formData, setFormData] = useState({
+    first_name: profile?.last_name || "",
+    last_name: profile?.last_name || "",
+    date_of_birth: profile?.date_of_birth || "",
+    bio: profile?.bio || "",
+  });
   const [error, setError] = useState("");
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchProfile();
-  }, [user]);
-
-  const fetchProfile = async () => {
-    try {
-      const { data, error } = await (supabase as any)
-        .from("profiles")
-        .select("first_name, last_name, date_of_birth, bio, created_at")
-        .eq("user_id", user.id)
-        .maybeSingle();
-
-      if (error) throw error;
-
-      if (data) {
-        setProfile(data);
-      }
-    } catch (error: any) {
-      console.error("Error fetching profile:", error);
-      setError(error.message);
-    }
-  };
+  // Update form when profile loads
+  if (profile && !formData.first_name && !formData.last_name) {
+    setFormData({
+      first_name: profile.last_name || "",
+      last_name: profile.last_name || "",
+      date_of_birth: profile.date_of_birth || "",
+      bio: profile.bio || "",
+    });
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError("");
 
     // Validate date of birth is not in the future
-    if (profile.date_of_birth) {
-      const dob = new Date(profile.date_of_birth);
+    if (formData.date_of_birth) {
+      const dob = new Date(formData.date_of_birth);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       
       if (dob > today) {
         setError("Date of birth cannot be in the future");
-        setLoading(false);
         return;
       }
     }
 
-    try {
-      const { error } = await (supabase as any).from("profiles").upsert(
-        {
-          user_id: user.id,
-          first_name: profile.first_name || null,
-          last_name: profile.last_name || null,
-          date_of_birth: profile.date_of_birth || null,
-          bio: profile.bio || null,
-        },
-        {
-          onConflict: "user_id",
-        },
-      );
+    const result = await updateProfile({
+      first_name: formData.first_name || undefined,
+      last_name: formData.last_name || undefined,
+      bio: formData.bio || undefined,
+    });
 
-      if (error) throw error;
-
-      toast({
-        title: "Profile updated!",
-        description: "Your profile information has been saved successfully.",
-      });
-    } catch (error: any) {
-      console.error("Error updating profile:", error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
+    if (!result.success) {
+      setError(result.error || "Failed to update profile");
     }
   };
 
-  const handleInputChange = (field: keyof Profile, value: string) => {
-    setProfile((prev) => ({
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
@@ -118,7 +83,7 @@ const ProfileSettings = ({ user }: ProfileSettingsProps) => {
               <p className="text-sm text-muted-foreground">Email cannot be changed</p>
             </div>
 
-            {profile.created_at && (
+            {profile?.created_at && (
               <div className="space-y-2">
                 <Label>Member Since</Label>
                 <p className="text-sm text-muted-foreground">
@@ -132,7 +97,7 @@ const ProfileSettings = ({ user }: ProfileSettingsProps) => {
                 <Label htmlFor="first_name">First Name</Label>
                 <Input
                   id="first_name"
-                  value={profile.first_name || ""}
+                  value={formData.first_name || ""}
                   onChange={(e) => handleInputChange("first_name", e.target.value)}
                   placeholder="Your first name"
                 />
@@ -142,7 +107,7 @@ const ProfileSettings = ({ user }: ProfileSettingsProps) => {
                 <Label htmlFor="last_name">Last Name</Label>
                 <Input
                   id="last_name"
-                  value={profile.last_name || ""}
+                  value={formData.last_name || ""}
                   onChange={(e) => handleInputChange("last_name", e.target.value)}
                   placeholder="Your last name"
                 />
@@ -154,7 +119,7 @@ const ProfileSettings = ({ user }: ProfileSettingsProps) => {
               <Input
                 id="date_of_birth"
                 type="date"
-                value={profile.date_of_birth || ""}
+                value={formData.date_of_birth || ""}
                 onChange={(e) => handleInputChange("date_of_birth", e.target.value)}
                 min={new Date(new Date().setFullYear(new Date().getFullYear() - 100)).toISOString().split('T')[0]}
                 max={new Date().toISOString().split('T')[0]}
@@ -166,7 +131,7 @@ const ProfileSettings = ({ user }: ProfileSettingsProps) => {
               <textarea
                 id="bio"
                 className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                value={profile.bio || ""}
+                value={formData.bio || ""}
                 onChange={(e) => handleInputChange("bio", e.target.value)}
                 placeholder="Tell us a bit about yourself and your interest in vineyard restoration..."
                 rows={3}
@@ -179,8 +144,8 @@ const ProfileSettings = ({ user }: ProfileSettingsProps) => {
               </Alert>
             )}
 
-            <Button type="submit" disabled={loading}>
-              {loading ? "Saving..." : "Save Profile"}
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? "Saving..." : "Save Profile"}
             </Button>
           </form>
         </CardContent>

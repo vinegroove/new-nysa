@@ -1,41 +1,15 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { supabase } from "@/integrations/supabase/client";
-import { User } from "@supabase/supabase-js";
-import { Grape, LogOut, User as UserIcon, Menu, X } from "lucide-react";
+import { Grape, Menu } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Navigation = () => {
-  const [user, setUser] = useState<User | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
   const isMobile = useIsMobile();
 
-  useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    navigate("/");
-    setIsOpen(false);
-  };
-
-  const publicNavLinks = [
+  const navLinks = [
     { name: "Our Story", href: "/our-story" },
     { name: "Projects", href: "/projects" },
     { name: "Learn More", href: "/learn-more" },
@@ -43,7 +17,7 @@ const Navigation = () => {
 
   const NavLinks = ({ className = "", onClick = () => {} }) => (
     <div className={className}>
-      {publicNavLinks.map((link) => (
+      {navLinks.map((link) => (
         <Link
           key={link.name}
           to={link.href}
@@ -53,38 +27,6 @@ const Navigation = () => {
           {link.name}
         </Link>
       ))}
-    </div>
-  );
-
-  const AuthButtons = ({ className = "", onClick = () => {}, isMobileMenu = false }) => (
-    <div className={className}>
-      {user ? (
-        <>
-          <Link to="/dashboard" onClick={onClick}>
-            <Button variant="ghost" size={isMobileMenu ? "default" : "sm"} className={isMobileMenu ? "w-full justify-start" : ""}>
-              <UserIcon className="h-4 w-4 mr-2" />
-              Community
-            </Button>
-          </Link>
-          <Button variant="ghost" size={isMobileMenu ? "default" : "sm"} className={isMobileMenu ? "w-full justify-start" : ""} onClick={() => { handleSignOut(); onClick(); }}>
-            <LogOut className="h-4 w-4 mr-2" />
-            Sign Out
-          </Button>
-        </>
-      ) : (
-        <>
-          <Link to="/auth" onClick={onClick}>
-            <Button variant="ghost" size={isMobileMenu ? "default" : "sm"} className={isMobileMenu ? "w-full justify-start" : ""}>
-              Sign In
-            </Button>
-          </Link>
-          <Link to="/auth?tab=signup" onClick={onClick}>
-            <Button size={isMobileMenu ? "default" : "sm"} className={isMobileMenu ? "w-full justify-start" : ""}>
-              Join Community
-            </Button>
-          </Link>
-        </>
-      )}
     </div>
   );
 
@@ -118,17 +60,9 @@ const Navigation = () => {
                   </div>
                   
                   <NavLinks 
-                    className="flex flex-col space-y-6 mb-8" 
+                    className="flex flex-col space-y-6" 
                     onClick={() => setIsOpen(false)} 
                   />
-                  
-                  <div className="border-t border-border pt-6 mt-auto">
-                    <AuthButtons 
-                      className="flex flex-col space-y-3" 
-                      onClick={() => setIsOpen(false)}
-                      isMobileMenu={true}
-                    />
-                  </div>
                 </div>
               </SheetContent>
             </Sheet>
@@ -152,8 +86,6 @@ const Navigation = () => {
             
             <NavLinks className="hidden md:flex items-center space-x-6" />
           </div>
-
-          <AuthButtons className="flex items-center space-x-4" />
         </div>
       </div>
     </nav>
