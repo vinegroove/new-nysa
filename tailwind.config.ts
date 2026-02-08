@@ -47,6 +47,15 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        /* Custom Nysa design tokens */
+        vineyard: {
+          gold: "hsl(var(--vineyard-gold))",
+          sage: "hsl(var(--sage-green))",
+        },
+        earth: {
+          brown: "hsl(var(--earth-brown))",
+          stone: "hsl(var(--warm-stone))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
