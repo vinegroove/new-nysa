@@ -9,12 +9,14 @@ export interface AuthUser extends User {}
 export interface AuthSession extends Session {}
 
 export interface UserProfile {
-  id: string;
   user_id: string;
-  first_name?: string;
-  last_name?: string;
-  avatar_url?: string;
-  bio?: string;
+  last_name?: string | null;
+  bio?: string | null;
+  email?: string | null;
+  date_of_birth?: string | null;
+  receive_newsletter?: boolean | null;
+  receive_community_events_emails?: boolean | null;
+  receive_volunteering_events_emails?: boolean | null;
   created_at: string;
   updated_at: string;
 }
